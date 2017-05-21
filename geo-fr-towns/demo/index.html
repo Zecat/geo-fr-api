@@ -87,7 +87,7 @@
           region-code="{{regionCode}}"
           latitude="{{latitude}}"
           longitude="{{longitude}}"
-          fields-restriction="[[fieldsRestriction]]"
+          fields="[[fields]]"
           geometry="[[geometry]]"
           loading="{{loading}}"
         ></geo-fr-towns>
@@ -164,9 +164,9 @@
 
             <isw-dropdown-menu
               multi
-              label="fields-restriction"
+              label="fields"
               attr-for-selected="field"
-              selected-items="{{fieldsRestriction}}"
+              selected-items="{{fields}}"
             >
               <paper-item field="nom">nom</paper-item>
               <paper-item field="code">code</paper-item>

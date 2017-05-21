@@ -62,7 +62,7 @@
           type: String
         },
 
-        fieldsRestriction: {
+        fields: {
           type: Array
         },
 
@@ -257,7 +257,7 @@
         "_updateParams('codeRegion', regionCode)",
         "_updateParams('format', format)",
         "_updateParams('geometry', geometry)",
-        "_updateFieldsRestrictionParams(fieldsRestriction)",
+        "_updateFieldsParams(fields)",
       ],
 
       _updateParams: function(key, value) {
@@ -269,9 +269,9 @@
         }
       },
 
-      _updateFieldsRestrictionParams: function(fieldsRestriction) {
-        if (fieldsRestriction.length) {
-          this.set('params.fields', fieldsRestriction.join());
+      _updateFieldsParams: function(fields) {
+        if (fields.length) {
+          this.set('params.fields', fields.join());
         } else {
           delete this.params.fields;
           this._forceParamsUpdate();
