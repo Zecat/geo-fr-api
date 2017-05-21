@@ -1,0 +1,77 @@
+{
+  "name": "geo-fr-api",
+  "version": "0.0.1",
+  "description": "A set of elements wrapping the french governmental geo api",
+  "main": "geo-fr-api.html",
+  "authors": [
+    "Zecat"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Zecat/geo-fr-api.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Zecat/geo-fr-api",
+  "ignore": [],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "geo",
+    "api",
+    "fr"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.9 - 2",
+    "iron-ajax": "PolymerElements/iron-ajax#1 - 2"
+  },
+  "devDependencies": {
+    "iron-component-page": "polymerelements/iron-component-page#1 - 2",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#1 - 2",
+    "marked-element": "PolymerElements/marked-element#1 - 2",
+    "prism-element": "PolymerElements/prism-element#1 - 2",
+    "paper-input": "PolymerElements/paper-input#1 - 2",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1 - 2",
+    "paper-item": "PolymerElements/paper-item#1 - 2",
+    "paper-listbox": "PolymerElements/paper-listbox#1 - 2",
+    "paper-spinner": "PolymerElements/paper-spinner#1 - 2",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#1 - 2",
+    "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "web-component-tester": "^6.0.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#1 - 2",
+    "paper-button": "PolymerElements/paper-button#1 - 2",
+    "isw-dropdown-menu": "https://github.com/Zecat/isw-dropdown-menu.git#develop"
+  },
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "Polymer/polymer#^1.9",
+        "iron-ajax": "PolymerElements/iron-ajax#^1.0.0"
+      },
+      "devDependencies": {
+        "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+        "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+        "paper-styles": "polymerelements/paper-styles#^1.0.0",
+        "test-fixture": "polymerelements/test-fixture#^1.0.0",
+        "marked-element": "PolymerElements/marked-element#^1.0.0",
+        "prism-element": "PolymerElements/prism-element#^1.0.0",
+        "paper-input": "PolymerElements/paper-input#^1.0.0",
+        "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.0.0",
+        "paper-item": "PolymerElements/paper-item#^1.0.0",
+        "paper-button": "PolymerElements/paper-button#^1.0.0",
+        "paper-listbox": "PolymerElements/paper-listbox#^1.0.0",
+        "paper-spinner": "PolymerElements/paper-spinner#^1.0.0",
+        "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+        "web-component-tester": "^4.0.0"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7"
+      }
+    }
+  },
+  "resolutions": {
+    "webcomponentsjs": "^1.0.0",
+    "iron-ajax": "1 - 2"
+  }
+}

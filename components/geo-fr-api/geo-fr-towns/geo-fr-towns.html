@@ -1,0 +1,305 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../iron-ajax/iron-ajax.html">
+
+<!--
+`geo-fr-towns`
+
+@element geo-fr-towns
+@demo geo-fr-towns/demo/index.html
+-->
+
+<dom-module id="geo-fr-towns">
+  <template>
+
+    <iron-ajax
+      id="ajax"
+      auto="[[auto]]"
+      active-requests="{{activeRequests}}"
+      bubbles="[[bubbles]]"
+      debounce-duration="[[debounceDuration]]"
+      json-prefix="[[jsonPrefix]]"
+      last-error="{{lastError}}"
+      last-request="{{lastRequest}}"
+      last-response="{{lastResponse}}"
+      handle-as="json"
+      loading="{{loading}}"
+      method="GET"
+      params="[[params]]"
+      reject-with-request="[[rejectWithRequest]]"
+      sync="[[sync]]"
+      timeout="[[timeout]]"
+      url="https://geo.api.gouv.fr/communes"
+      verbose="[[verbose]]"
+    ></iron-ajax>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'geo-fr-towns',
+
+      hostAttributes: {
+        hidden: true
+      },
+
+      properties: {
+
+        value: {
+          type: Array,
+          computed: '_computeValue(maxResults, lastResponse)',
+          notify: true,
+          value: () => []
+        },
+
+        maxResults: {
+          type: Number,
+          value: 20,
+          notify: true
+        },
+
+        name: {
+          type: String
+        },
+
+        fields: {
+          type: Array
+        },
+
+        code: {
+          type: String
+        },
+
+        boost: {
+          type: String
+        },
+
+        departementCode: {
+          type: String
+        },
+
+        regionCode: {
+          type: String
+        },
+
+        postalCode: {
+          type: String
+        },
+
+        format: {
+          type: String
+        },
+
+        geometry: {
+          type: String
+        },
+
+        latitude: {
+          type: Number
+        },
+
+        longitude: {
+          type: Number
+        },
+
+        /**
+         * An Array of all in-flight requests originating from this iron-ajax
+         * element.
+         */
+        activeRequests: {
+          type: Array,
+          notify: true,
+          value: function() {
+            return [];
+          }
+        },
+
+        /**
+         * If true, automatically performs an Ajax request when either `url` or
+         * `params` changes.
+         */
+        auto: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * By default, iron-ajax's events do not bubble. Setting this attribute will cause its
+         * request and response events as well as its iron-ajax-request, -response,  and -error
+         * events to bubble to the window object. The vanilla error event never bubbles when
+         * using shadow dom even if this.bubbles is true because a scoped flag is not passed with
+         * it (first link) and because the shadow dom spec did not used to allow certain events,
+         * including events named error, to leak outside of shadow trees (second link).
+         * https://www.w3.org/TR/shadow-dom/#scoped-flag
+         * https://www.w3.org/TR/2015/WD-shadow-dom-20151215/#events-that-are-not-leaked-into-ancestor-trees
+         */
+        bubbles: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Length of time in milliseconds to debounce multiple automatically generated requests.
+         */
+        debounceDuration: {
+          type: Number,
+          value: 500,
+          notify: true
+        },
+
+        /**
+         * Prefix to be stripped from a JSON response before parsing it.
+         *
+         * In order to prevent an attack using CSRF with Array responses
+         * (http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx/)
+         * many backends will mitigate this by prefixing all JSON response bodies
+         * with a string that would be nonsensical to a JavaScript parser.
+         *
+         */
+        jsonPrefix: {
+          type: String,
+          value: ''
+        },
+
+        /**
+         * lastRequest's error, if any.
+         *
+         * @type {Object}
+         */
+        lastError: {
+          type: Object,
+          notify: true
+        },
+
+        /**
+         * The most recent request made by this iron-ajax element.
+         */
+        lastRequest: {
+          type: Object,
+          notify: true
+        },
+
+        /**
+         * lastRequest's response.
+         *
+         * Note that lastResponse and lastError are set when lastRequest finishes,
+         * so if loading is true, then lastResponse and lastError will correspond
+         * to the result of the previous request.
+         *
+         * The type of the response is determined by the value of `handleAs` at
+         * the time that the request was generated.
+         *
+         * @type {Array}
+         */
+        lastResponse: {
+          type: Array,
+          notify: true
+        },
+
+        /**
+         * True while lastRequest is in flight.
+         */
+        loading: {
+          type: Boolean,
+          notify: true
+        },
+
+        params: {
+          type: Object,
+          value: function() {
+            return {};
+          }
+        },
+
+        /**
+         * Changes the completes promise chain from generateRequest to reject with an object
+         *  containing the error message as well as the request.
+         */
+        rejectWithRequest: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Toggle whether XHR is synchronous or asynchronous. Don't change this
+         * to true unless You Know What You Are Doing™.
+         */
+        sync: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Set the timeout flag on the request.
+         */
+        timeout: {
+          type: Number,
+          value: 0
+        },
+
+        /**
+         * If true, error messages will automatically be logged to the console.
+         */
+        verbose: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      observers: [
+        "_updateParams('codePostal', postalCode)",
+        "_updateParams('lat', latitude)",
+        "_updateParams('lon', longitude)",
+        "_updateParams('nom', name)",
+        "_updateParams('boost', boost)",
+        "_updateParams('code', code)",
+        "_updateParams('codeDepartement', departementCode)",
+        "_updateParams('codeRegion', regionCode)",
+        "_updateParams('format', format)",
+        "_updateParams('geometry', geometry)",
+        "_updateFieldsParams(fields.splices)",
+      ],
+
+      _updateParams: function(key, value) {
+        if (value !== '') {
+          this.set(['params', key], value);
+        } else {
+          delete this.params[key];
+          this._forceParamsUpdate();
+        }
+      },
+
+      _updateFieldsParams: function(changeRecord) {
+        if (this.fields && this.fields.length) {
+          this.set('params.fields', this.fields.join());
+        } else {
+          delete this.params.fields;
+          this._forceParamsUpdate();
+        }
+      },
+
+      generateRequest: function() {
+        return this.$.ajax.generateRequest();
+      },
+
+      _computeValue: function(maxResults, lastResponse) {
+        return lastResponse ?
+          (maxResults >= 0 ? lastResponse.slice(0, maxResults) : lastResponse):
+          [];
+      },
+
+      /**
+       * Force data system to pick up subproperty changes for params property
+       * cf https://github.com/Polymer/polymer/issues/2631
+       */
+      _forceParamsUpdate() {
+        this.debounce('force-param-update', function() {
+         var params = this.params
+         this.params = {};
+         this.params = params;
+        }.bind(this), 1);
+      }
+
+    });
+  </script>
+</dom-module>
