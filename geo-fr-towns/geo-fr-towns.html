@@ -45,9 +45,9 @@
 
       properties: {
 
-        towns: {
+        value: {
           type: Array,
-          computed: '_computeTowns(maxResults, lastResponse)',
+          computed: '_computeValue(maxResults, lastResponse)',
           notify: true,
           value: () => []
         },
@@ -282,7 +282,7 @@
         return this.$.ajax.generateRequest();
       },
 
-      _computeTowns: function(maxResults, lastResponse) {
+      _computeValue: function(maxResults, lastResponse) {
         return lastResponse ?
           (maxResults >= 0 ? lastResponse.slice(0, maxResults) : lastResponse):
           [];
