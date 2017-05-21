@@ -36,11 +36,11 @@
     "paper-spinner": "PolymerElements/paper-spinner#1 - 2",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#1 - 2",
     "test-fixture": "PolymerElements/test-fixture#^3.0.0-rc.1",
-    "isw-dropdown-menu": "IswPolymerElements/isw-dropdown-menu#^1.0.11",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "web-component-tester": "^6.0.0",
-    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.0",
-    "paper-button": "PolymerElements/paper-button#^2.0.0"
+    "paper-checkbox": "PolymerElements/paper-checkbox#1 - 2",
+    "paper-button": "PolymerElements/paper-button#1 - 2",
+    "isw-dropdown-menu": "https://github.com/Zecat/isw-dropdown-menu.git#develop"
   },
   "variants": {
     "1.x": {
@@ -58,10 +58,10 @@
         "paper-input": "PolymerElements/paper-input#^1.0.0",
         "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.0.0",
         "paper-item": "PolymerElements/paper-item#^1.0.0",
+        "paper-button": "PolymerElements/paper-button#^1.0.0",
         "paper-listbox": "PolymerElements/paper-listbox#^1.0.0",
         "paper-spinner": "PolymerElements/paper-spinner#^1.0.0",
         "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
-        "isw-dropdown-menu": "IswPolymerElements/isw-dropdown-menu#^1.0.11",
         "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
         "web-component-tester": "^4.0.0"
       },
@@ -71,6 +71,7 @@
     }
   },
   "resolutions": {
-    "webcomponentsjs": "^1.0.0"
+    "webcomponentsjs": "^1.0.0",
+    "iron-ajax": "1 - 2"
   }
 }
