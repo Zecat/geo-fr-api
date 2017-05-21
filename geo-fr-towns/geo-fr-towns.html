@@ -292,10 +292,12 @@
        * Force data system to pick up subproperty changes for params property
        * cf https://github.com/Polymer/polymer/issues/2631
        */
-      _forceParamsUpdate(arguments) {
-        var params = this.params
-        this.params = {};
-        this.params = params;
+      _forceParamsUpdate() {
+        this.debounce('force-param-update', function() {
+         var params = this.params
+         this.params = {};
+         this.params = params;
+        }.bind(this), 1);
       }
 
     });
