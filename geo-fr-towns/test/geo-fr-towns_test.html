@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>geo-fr-towns test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../geo-fr-towns.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <geo-fr-towns></geo-fr-towns>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('geo-fr-towns', function() {
+        test('instantiating the element works', function() {
+          var element = fixture('basic');
+          assert.equal(element.is, 'geo-fr-towns');
+        });
+      });
+    </script>
+  </body>
+</html>

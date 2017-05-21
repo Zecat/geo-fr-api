@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>geo-fr-towns demo</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../../marked-element/marked-element.html">
+    <link rel="import" href="../../../prism-element/prism-highlighter.html">
+    <link rel="import" href="../../../paper-input/paper-input.html">
+    <link rel="import" href="../../../paper-listbox/paper-listbox.html">
+    <link rel="import" href="../../../paper-item/paper-item.html">
+    <link rel="import" href="../../../paper-spinner/paper-spinner.html">
+    <link rel="import" href="../../../paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="../../../paper-button/paper-button.html">
+    <link rel="import" href="../../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../../paper-styles/typography.html">
+    <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="../../../isw-dropdown-menu/isw-dropdown-menu.html">
+    <link rel="import" href="../../../polymer/lib/elements/custom-style.html">
+    <link rel="import" href="../geo-fr-towns.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </head>
+  <body>
+
+    <custom-style>
+      <style>
+        body {
+          @apply --layout-fullbleed;
+        }
+        #townMardown, #sandboxInputs {
+          padding: 24px;
+        }
+        #sandboxInputs, #townsResults {
+          @apply --layout-vertical;
+          @apply --layout-flex;
+          @apply --layout-scroll;
+          height: 100vh;
+          box-sizing: border-box;
+        }
+        #sandbox {
+          @apply --layout-horizontal;
+          @apply --layout-wrap;
+          @apply --paper-font-common-base;
+        }
+        #sandboxInputs {
+          flex-basis: 300px;
+        }
+        #townsResults {
+          @apply --layout-vertical;
+          @apply --layout-flex;
+          flex-basis: 200px;
+          background: #fafafa;
+        }
+        #spinner {
+          padding-left: 24px;
+        }
+        #headerToolbar {
+          height: 64px;
+          padding: 24px;
+          box-sizing: border-box;
+          @apply --layout-horizontal;
+          @apply --layout-center;
+          @apply --layout-flex-none;
+        }
+      </style>
+    </custom-style>
+
+    <dom-bind id="scope">
+      <template>
+
+        <geo-fr-towns
+          id="geoFrTowns"
+          auto="{{auto}}"
+          towns="{{towns}}"
+          name="[[name]]"
+          debounce-duration="500"
+          max-results="{{maxResults}}"
+          debounce-duration="{{debounceDuration}}"
+          code="{{code}}"
+          postal-code="{{postalCode}}"
+          department-code="{{departementCode}}"
+          region-code="{{regionCode}}"
+          latitude="{{latitude}}"
+          longitude="{{longitude}}"
+          fields-restriction="[[fieldsRestriction]]"
+          geometry="[[geometry]]"
+          loading="{{loading}}"
+        ></geo-fr-towns>
+
+        <div id="sandbox">
+
+          <div id="sandboxInputs">
+            <div>
+              <paper-checkbox checked="{{auto}}">auto</paper-checkbox>
+              <paper-button raised on-tap="generateRequest">generate request</paper-button>
+            </div>
+
+            <paper-input
+              label="name"
+              value="{{name}}"
+            ></paper-input>
+
+            <paper-input
+              label="code"
+              value="{{code}}"
+            ></paper-input>
+
+            <paper-input
+              label="postal-code"
+              value="{{postalCode}}"
+            ></paper-input>
+
+            <paper-input
+            label="department-code"
+            value="{{departementCode}}"
+            ></paper-input>
+
+            <paper-input
+              label="region-code"
+              value="{{regionCode}}"
+            ></paper-input>
+
+            <paper-input
+              label="max-results"
+              type="number"
+              value="{{maxResults}}"
+              min="-1"
+              max="100"
+            ></paper-input>
+
+            <paper-input
+              label="latitude"
+              type="number"
+              value="{{latitude}}"
+            ></paper-input>
+
+            <paper-input
+              label="longitude"
+              type="number"
+              value="{{longitude}}"
+            ></paper-input>
+
+            <paper-input
+              label="debounce-duration"
+              type="number"
+              value="{{debounceDuration}}"
+            ></paper-input>
+
+            <paper-dropdown-menu label="geometry">
+              <paper-listbox
+                slot="dropdown-content"
+                selected="{{geometry}}"
+                attr-for-selected="geometry"
+              >
+                <paper-item geometry="center">center</paper-item>
+                <paper-item geometry="contour">contour</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+            <isw-dropdown-menu
+              multi
+              label="fields-restriction"
+              attr-for-selected="field"
+              selected-items="{{fieldsRestriction}}"
+            >
+              <paper-item field="nom">nom</paper-item>
+              <paper-item field="code">code</paper-item>
+              <paper-item field="codesPostaux">codesPostaux</paper-item>
+              <paper-item field="codeDepartement">codeDepartement</paper-item>
+              <paper-item field="codeRegion">codeRegion</paper-item>
+              <paper-item field="population">population</paper-item>
+            </isw-dropdown-menu>
+
+          </div>
+
+          <div id="townsResults">
+            <div id="headerToolbar">
+              <h3 spacer>towns</h3>
+              <paper-spinner id="spinner" active="[[loading]]"></paper-spinner>
+            </div>
+            <prism-highlighter></prism-highlighter>
+
+            <marked-element id="townMardown" markdown="[[arrayToMarkdown(towns)]]">
+              <div slot="markdown-html"></div>
+            </marked-element>
+          </div>
+
+        </div>
+
+        <script>
+
+          var scope = document.getElementById('scope');
+
+          scope.arrayToMarkdown = function(array) {
+            return '```json\n' +
+            JSON.stringify(array, null, 2) +
+            '\n' + '```';
+          };
+
+          document.addEventListener('WebComponentsReady', function() {
+            var geoFrTowns = scope.$.geoFrTowns;
+
+            scope.generateRequest = function() {
+              geoFrTowns.generateRequest();
+            }
+          });
+
+        </script>
+      </template>
+    </dom-bind>
+
+  </body>
+</html>
