@@ -257,7 +257,7 @@
         "_updateParams('codeRegion', regionCode)",
         "_updateParams('format', format)",
         "_updateParams('geometry', geometry)",
-        "_updateFieldsParams(fields)",
+        "_updateFieldsParams(fields.splices)",
       ],
 
       _updateParams: function(key, value) {
@@ -269,9 +269,9 @@
         }
       },
 
-      _updateFieldsParams: function(fields) {
-        if (fields.length) {
-          this.set('params.fields', fields.join());
+      _updateFieldsParams: function(changeRecord) {
+        if (this.fields && this.fields.length) {
+          this.set('params.fields', this.fields.join());
         } else {
           delete this.params.fields;
           this._forceParamsUpdate();
