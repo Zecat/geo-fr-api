@@ -18,4 +18,4 @@ $ bower install Zecat/geo-fr-api --save
 
 ### Elements
 
-- [geo-fr-api](/geo-fr-api)
+- [geo-fr-towns](/geo-fr-towns)
