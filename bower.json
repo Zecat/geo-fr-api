@@ -41,7 +41,7 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#1 - 2",
     "paper-button": "PolymerElements/paper-button#1 - 2",
     "vaadin-combo-box": "vaadin/vaadin-combo-box#master",
-    "isw-dropdown-menu": "https://github.com/Zecat/isw-dropdown-menu.git#develop"
+    "isw-dropdown-menu": "IswPolymerElements/isw-dropdown-menu#^1.0.12"
   },
   "variants": {
     "1.x": {
