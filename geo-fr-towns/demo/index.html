@@ -201,6 +201,7 @@
           };
 
           document.addEventListener('WebComponentsReady', function() {
+            scope.auto = true;
             var geoFrTowns = scope.$.geoFrTowns;
 
             scope.generateRequest = function() {
