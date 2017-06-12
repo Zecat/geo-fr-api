@@ -74,6 +74,6 @@
   },
   "resolutions": {
     "webcomponentsjs": "^1.0.0",
-    "iron-ajax": "1 - 2"
+    "iron-ajax": "^2.0.0"
   }
 }
