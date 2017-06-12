@@ -24,6 +24,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
       name="Paris"
     ></geo-fr-towns>
 
+    <h2>Matching towns:</h2>
     <template is="dom-repeat" items="[[towns]]">
       <p>
         Name: [[item.nom]],
@@ -48,7 +49,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 ```html
 <!-- All components -->
 <link rel="import" href="/bower_components/geo-fr-api/geo-fr-api.html">
-<!-- Towns components -->
+<!-- Only towns components -->
 <link rel="import" href="/bower_components/geo-fr-api/geo-fr-towns.html">
 ```
 
