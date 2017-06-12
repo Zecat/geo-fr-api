@@ -6,7 +6,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 
 <!--
 ```
-<custom-element-demo height="400">
+<custom-element-demo height="200">
 <template>
 <link rel="import" href="geo-fr-towns/geo-fr-towns.html">
 <next-code-block></next-code-block>
@@ -15,22 +15,21 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 ```
 -->
 ```html
-<dom-bind id="scope">
+<dom-bind>
   <template>
 
     <geo-fr-towns
-      id="geoFrTowns"
       auto
       value="{{towns}}"
-      name="Pari"
+      name="Paris"
     ></geo-fr-towns>
 
     <template is="dom-repeat" items="[[towns]]">
       <p>
-        Name: [[selectedItem.nom]],
-        postal code: [[selectedItem.codePostaux.0]],
-        departement code: [[selectedItem.codeDepartement]],
-        population: [[selectedItem.population]]
+        Name: [[item.nom]],
+        postal code: [[item.codePostaux.0]],
+        departement code: [[item.codeDepartement]],
+        population: [[item.population]]
       </p>
     </template>
 
@@ -41,7 +40,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 ## Install
 
 ```bash
-  bower install Zecat/geo-fr-api --save
+  bower install -S Zecat/geo-fr-api
 ```
 
 ## Import
