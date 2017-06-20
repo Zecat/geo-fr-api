@@ -50,7 +50,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 <!-- All components -->
 <link rel="import" href="/bower_components/geo-fr-api/geo-fr-api.html">
 <!-- Only towns components -->
-<link rel="import" href="/bower_components/geo-fr-api/geo-fr-towns.html">
+<link rel="import" href="/bower_components/geo-fr-api/geo-fr-towns/geo-fr-towns.html">
 ```
 
 ## What is inside
