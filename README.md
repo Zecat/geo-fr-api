@@ -21,13 +21,13 @@ A collection of elements wrapping the [french governmental geo api](https://api.
     <geo-fr-towns
       auto
       value="{{towns}}"
-      name="Paris"
+      town-name="Paris"
     ></geo-fr-towns>
 
     <h2>Matching towns:</h2>
     <template is="dom-repeat" items="[[towns]]">
       <p>
-        Name: [[item.nom]],
+        Name: [[item.townName]],
         postal code: [[item.codePostaux.0]],
         departement code: [[item.codeDepartement]],
         population: [[item.population]]

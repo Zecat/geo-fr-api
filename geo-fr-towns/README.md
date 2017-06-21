@@ -6,7 +6,7 @@ It requests the [french governmental geo api](https://api.gouv.fr/api/api-geo.ht
 
 ### Filters
 
-Filters are properties  `name`, `code`, `postalCode`, `departementCode`, `regionCode`, `format`, `geometry`, `latitude`, `longitude`
+Filters are properties  `townName`, `code`, `postalCode`, `departementCode`, `regionCode`, `format`, `geometry`, `latitude`, `longitude`
 Use and combine them to refine the search.
 
 ### Model
