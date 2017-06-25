@@ -2,15 +2,14 @@
 <link rel="import" href="../../iron-ajax/iron-ajax.html">
 
 <!--
-`geo-fr-towns`
+`geo-fr-addresses`
 
 @group Geo Fr Api
-@element geo-fr-towns
-@demo geo-fr-towns/demo/index.html Towns sandbox
-@demo geo-fr-towns/demo/vaadin-combo-box.html With vaadin-combo-box
+@element geo-fr-addresses
+@demo geo-fr-addresses/demo/index.html Addresses sandbox
 -->
 
-<dom-module id="geo-fr-towns">
+<dom-module id="geo-fr-addresses">
   <template>
 
     <iron-ajax
@@ -22,7 +21,7 @@
       json-prefix="[[jsonPrefix]]"
       last-error="{{lastError}}"
       last-request="{{lastRequest}}"
-      last-response="{{lastResponse}}"
+      last-response="{{value}}"
       handle-as="json"
       loading="{{loading}}"
       method="GET"
@@ -30,7 +29,7 @@
       reject-with-request="[[rejectWithRequest]]"
       sync="[[sync]]"
       timeout="[[timeout]]"
-      url="https://geo.api.gouv.fr/communes"
+      url="https://api-adresse.data.gouv.fr/search/"
       verbose="[[verbose]]"
     ></iron-ajax>
 
@@ -39,7 +38,7 @@
   <script>
     Polymer({
 
-      is: 'geo-fr-towns',
+      is: 'geo-fr-addresses',
 
       hostAttributes: {
         hidden: true
@@ -49,38 +48,19 @@
 
         value: {
           type: Array,
-          computed: '_computeValue(maxResults, lastResponse)',
           notify: true,
           value: () => []
         },
 
-        maxResults: {
-          type: Number,
-          value: 20,
-          notify: true
+        limit: {
+          type: Number
         },
 
-        townName: {
+        address: {
           type: String
         },
 
-        fields: {
-          type: Array
-        },
-
-        code: {
-          type: String
-        },
-
-        boost: {
-          type: String
-        },
-
-        departementCode: {
-          type: String
-        },
-
-        regionCode: {
+        cityCode: {
           type: String
         },
 
@@ -88,11 +68,7 @@
           type: String
         },
 
-        format: {
-          type: String
-        },
-
-        geometry: {
+        type: {
           type: String
         },
 
@@ -102,6 +78,16 @@
 
         longitude: {
           type: Number
+        },
+
+        autocompleteDisabled: {
+          type: Boolean,
+          value: false
+        },
+
+        _autocomplete: {
+          type: Number,
+          computed: '_compute_autocomplete(autocompleteDisabled)'
         },
 
         /**
@@ -249,17 +235,13 @@
       },
 
       observers: [
-        "_updateParams('codePostal', postalCode)",
+        "_updateParams('q', address)",
+        "_updateParams('postcode', postalCode)",
+        "_updateParams('citycode', cityCode)",
+        "_updateParams('type', type)",
         "_updateParams('lat', latitude)",
         "_updateParams('lon', longitude)",
-        "_updateParams('nom', townName)",
-        "_updateParams('boost', boost)",
-        "_updateParams('code', code)",
-        "_updateParams('codeDepartement', departementCode)",
-        "_updateParams('codeRegion', regionCode)",
-        "_updateParams('format', format)",
-        "_updateParams('geometry', geometry)",
-        "_updateFieldsParams(fields.splices)",
+        "_updateParams('autocomplete', _autocomplete)"
       ],
 
       _updateParams: function(key, value) {
@@ -271,23 +253,8 @@
         }
       },
 
-      _updateFieldsParams: function(changeRecord) {
-        if (this.fields && this.fields.length) {
-          this.set('params.fields', this.fields.join());
-        } else {
-          delete this.params.fields;
-          this._forceParamsUpdate();
-        }
-      },
-
       generateRequest: function() {
         return this.$.ajax.generateRequest();
-      },
-
-      _computeValue: function(maxResults, lastResponse) {
-        return lastResponse ?
-          (maxResults >= 0 ? lastResponse.slice(0, maxResults) : lastResponse):
-          [];
       },
 
       /**
@@ -300,6 +267,10 @@
          this.params = {};
          this.params = params;
         }.bind(this), 1);
+      },
+
+      _compute_autocomplete(autocompleteDisabled) {
+        return ~~autocompleteDisabled;
       }
 
     });
