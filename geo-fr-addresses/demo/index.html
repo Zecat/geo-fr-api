@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>geo-fr-addresses demo</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../../marked-element/marked-element.html">
+    <link rel="import" href="../../../prism-element/prism-highlighter.html">
+    <link rel="import" href="../../../paper-input/paper-input.html">
+    <link rel="import" href="../../../paper-listbox/paper-listbox.html">
+    <link rel="import" href="../../../paper-item/paper-item.html">
+    <link rel="import" href="../../../paper-spinner/paper-spinner.html">
+    <link rel="import" href="../../../paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="../../../paper-button/paper-button.html">
+    <link rel="import" href="../../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../../paper-styles/typography.html">
+    <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="../../../isw-dropdown-menu/isw-dropdown-menu.html">
+    <link rel="import" href="../../../polymer/lib/elements/custom-style.html">
+    <link rel="import" href="../geo-fr-addresses.html">
+
+  </head>
+  <body>
+
+    <custom-style>
+      <style is="custom-style">
+        body {
+          @apply --layout-fullbleed;
+        }
+        #addressMarkdown, #sandboxInputs {
+          padding: 24px;
+        }
+        #sandboxInputs, #results {
+          @apply --layout-vertical;
+          @apply --layout-flex;
+          @apply --layout-scroll;
+          height: 100vh;
+          box-sizing: border-box;
+        }
+        #sandbox {
+          @apply --layout-horizontal;
+          @apply --layout-wrap;
+          @apply --paper-font-common-base;
+        }
+        #sandboxInputs {
+          flex-basis: 300px;
+        }
+        #results {
+          @apply --layout-vertical;
+          @apply --layout-flex;
+          flex-basis: 200px;
+          background: #fafafa;
+        }
+        #spinner {
+          padding-left: 24px;
+        }
+        #headerToolbar {
+          height: 64px;
+          padding: 24px;
+          box-sizing: border-box;
+          @apply --layout-horizontal;
+          @apply --layout-center;
+          @apply --layout-flex-none;
+        }
+      </style>
+    </custom-style>
+
+    <dom-bind id="scope">
+      <template>
+
+        <geo-fr-addresses
+          id="geoFrAddress"
+          auto="{{auto}}"
+          value="{{value}}"
+          address="[[address]]"
+          limit="{{limit}}"
+          debounce-duration="{{debounceDuration}}"
+          city-code="{{cityCode}}"
+          postal-code="{{postalCode}}"
+          latitude="{{latitude}}"
+          longitude="{{longitude}}"
+          loading="{{loading}}"
+          type="{{type}}"
+          autocomplete-disabled="[[autocompleteDisabled]]"
+        ></geo-fr-addresses>
+
+        <div id="sandbox">
+
+          <div id="sandboxInputs">
+            <div>
+              <paper-checkbox checked="{{auto}}">auto</paper-checkbox>
+              <paper-checkbox checked="{{autocompleteDisabled}}">autocomplete-disabled</paper-checkbox>
+              <paper-button raised on-tap="generateRequest">generate request</paper-button>
+            </div>
+
+            <paper-input
+              label="address"
+              value="{{address}}"
+            ></paper-input>
+
+            <paper-input
+              label="city-code"
+              value="{{cityCode}}"
+            ></paper-input>
+
+            <paper-input
+              label="postal-code"
+              value="{{postalCode}}"
+            ></paper-input>
+
+            <paper-input
+              label="limit"
+              type="number"
+              value="{{limit}}"
+              min="-1"
+              max="100"
+            ></paper-input>
+
+            <paper-dropdown-menu label="type">
+              <paper-listbox
+                slot="dropdown-content"
+                selected="{{type}}"
+                attr-for-selected="type"
+              >
+                <paper-item type="street">street</paper-item>
+                <paper-item type="housenumber">housenumber</paper-item>
+                <paper-item type=""></paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+            <paper-input
+              label="latitude"
+              type="number"
+              value="{{latitude}}"
+            ></paper-input>
+
+            <paper-input
+              label="longitude"
+              type="number"
+              value="{{longitude}}"
+            ></paper-input>
+
+            <paper-input
+              label="debounce-duration"
+              type="number"
+              value="{{debounceDuration}}"
+            ></paper-input>
+
+          </div>
+
+          <div id="results">
+            <div id="headerToolbar">
+              <h3 spacer>value</h3>
+              <paper-spinner id="spinner" active="[[loading]]"></paper-spinner>
+            </div>
+            <prism-highlighter></prism-highlighter>
+
+            <marked-element id="addressMarkdown" markdown="[[arrayToMarkdown(value)]]">
+              <div slot="markdown-html"></div>
+            </marked-element>
+          </div>
+
+        </div>
+
+      </template>
+
+      <script>
+
+        var scope = document.getElementById('scope');
+
+        scope.arrayToMarkdown = function(array) {
+          return '```json\n' +
+          JSON.stringify(array, null, 2) +
+          '\n' + '```';
+        };
+
+        document.addEventListener('WebComponentsReady', function() {
+          scope.auto = true;
+          var geoFrAddress = scope.$.geoFrAddress;
+          console.log('prout')
+          scope.generateRequest = function() {
+            geoFrAddress.generateRequest();
+          }
+        });
+
+      </script>
+    </dom-bind>
+
+  </body>
+</html>

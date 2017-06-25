@@ -49,8 +49,10 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 ```html
 <!-- All components -->
 <link rel="import" href="/bower_components/geo-fr-api/geo-fr-api.html">
-<!-- Only towns components -->
+<!-- towns components -->
 <link rel="import" href="/bower_components/geo-fr-api/geo-fr-towns/geo-fr-towns.html">
+<!-- addresses components -->
+<link rel="import" href="/bower_components/geo-fr-api/geo-fr-addresses/geo-fr-addresses.html">
 ```
 
 ## What is inside
@@ -58,5 +60,6 @@ A collection of elements wrapping the [french governmental geo api](https://api.
 ### Elements
 
 - [geo-fr-towns](/geo-fr-towns)
+- [geo-fr-addresses](/geo-fr-addresses)
 - geo-fr-departments (incomming)
 - geo-fr-region (incomming)
