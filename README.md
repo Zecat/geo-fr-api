@@ -27,7 +27,7 @@ A collection of elements wrapping the [french governmental geo api](https://api.
     <h2>Matching towns:</h2>
     <template is="dom-repeat" items="[[towns]]">
       <p>
-        Name: [[item.townName]],
+        Name: [[item.nom]],
         postal code: [[item.codePostaux.0]],
         departement code: [[item.codeDepartement]],
         population: [[item.population]]
